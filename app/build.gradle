@@ -5,16 +5,48 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+//    signingConfigs {
+//        release {
+//            storeFile file('./BlueMoon.keystore')
+//            storePassword "bluemoon"
+//            keyAlias "bluemoon"
+//            keyPassword "!12345678"
+//        }
+//    }
+
     defaultConfig {
         applicationId "lk.cn.com.exp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips", "arm64", "x86_64"
+        }
+        multiDexEnabled true
     }
     buildTypes {
-        release {
+        debug {
+            // 是否进行混淆
             minifyEnabled false
+            // 是否压缩(zip对齐)
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            // 64k限制解决
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            // 是否进行混淆
+            minifyEnabled true
+            // 是否压缩(zip对齐)
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            // 64k限制解决
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -28,4 +60,13 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32'
+
+    // rxjava
+    compile 'io.reactivex.rxjava2:rxjava:2.1.6'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // okhttp + retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 }

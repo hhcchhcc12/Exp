@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".clip.PagerActivity"/>
+        <activity android:name=".http.OkHttpActivity"/>
     </application>
 
 </manifest>
