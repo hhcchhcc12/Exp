@@ -33,6 +33,7 @@
 -dontwarn javax.inject.**
 
 # OkHttp3
+-keep class okhttp3.logging.**{*;}
 -keep class okhttp3.internal.**{*;}
 -dontwarn okio.**
 

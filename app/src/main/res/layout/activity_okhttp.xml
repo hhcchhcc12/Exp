@@ -21,8 +21,7 @@
                 android:id="@+id/tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n很长很长的文本\n"
-                android:textSize="50sp"/>
+                android:textSize="20sp"/>
         </ScrollView>
 
         <TextView

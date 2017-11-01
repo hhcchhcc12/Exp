@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="lk.cn.com.exp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -10,14 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".clip.ClipActivity">
+
+        </activity>
+        <activity android:name=".clip.PagerActivity"/>
+        <activity android:name=".http.OkHttpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".clip.PagerActivity"/>
-        <activity android:name=".http.OkHttpActivity"/>
     </application>
 
 </manifest>
