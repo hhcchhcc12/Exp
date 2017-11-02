@@ -60,9 +60,6 @@ public class OkHttpActivity extends AppCompatActivity {
         }
     }
 
-    public static final String CLIENT = "android";
-    private static final String FORMAT = "json";
-    private static final String APP_TYPE = "washMall";
     private static final String HOST = "tmallapi.bluemoon.com.cn";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -147,7 +144,7 @@ public class OkHttpActivity extends AppCompatActivity {
                         + "&lng=999.0&lat=999.0&hig=0.0&sign=fa224d9ec30cc3b20cbae7532e398668")
                 .header("Content-Type", "application/json")
                 .post(rb)
-                .tag("OKHTTP")
+                .tag("OKHTTPTEST")
                 .build();
 
         // 同步执行
@@ -169,7 +166,7 @@ public class OkHttpActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 // 特别注意，400,401等错误也会在此处回调
                 final int code = response.code();
-                if (code == 200) {
+                if (response.isSuccessful()) {
                     final String responseStr = response.body().string();
                     Log.d("RESPONSE", response.request().tag() + "(" + code + ")-->" +
                             responseStr);

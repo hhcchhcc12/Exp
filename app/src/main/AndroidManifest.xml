@@ -12,10 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".clip.ClipActivity">
-
         </activity>
         <activity android:name=".clip.PagerActivity"/>
         <activity android:name=".http.OkHttpActivity">
+        </activity>
+        <activity android:name=".http.RetrofitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
