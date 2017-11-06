@@ -13,15 +13,18 @@
         android:theme="@style/AppTheme">
         <activity android:name=".clip.ClipActivity">
         </activity>
-        <activity android:name=".clip.PagerActivity"/>
-        <activity android:name=".http.OkHttpActivity">
-        </activity>
-        <activity android:name=".http.RetrofitActivity">
+        <activity android:name=".clip.PagerActivity">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".http.OkHttpActivity">
+        </activity>
+        <activity android:name=".http.RetrofitActivity">
         </activity>
     </application>
 

@@ -10,12 +10,31 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.AccordionTransformer;
+import com.ToxicBakery.viewpager.transforms.BackgroundToForegroundTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeInTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
+import com.ToxicBakery.viewpager.transforms.DefaultTransformer;
+import com.ToxicBakery.viewpager.transforms.DepthPageTransformer;
+import com.ToxicBakery.viewpager.transforms.FlipHorizontalTransformer;
+import com.ToxicBakery.viewpager.transforms.FlipVerticalTransformer;
+import com.ToxicBakery.viewpager.transforms.ForegroundToBackgroundTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateDownTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.ToxicBakery.viewpager.transforms.ScaleInOutTransformer;
+import com.ToxicBakery.viewpager.transforms.StackTransformer;
+import com.ToxicBakery.viewpager.transforms.TabletTransformer;
+import com.ToxicBakery.viewpager.transforms.ZoomInTransformer;
+import com.ToxicBakery.viewpager.transforms.ZoomOutSlideTransformer;
+import com.ToxicBakery.viewpager.transforms.ZoomOutTranformer;
+
 import lk.cn.com.exp.R;
 
-public class PagerActivity extends AppCompatActivity {
+public class PagerActivity extends AppCompatActivity implements View.OnClickListener {
 
     ViewPager vp;
 
@@ -38,6 +57,38 @@ public class PagerActivity extends AppCompatActivity {
         vp.setOffscreenPageLimit(3);
         vp.setPageTransformer(false, new PageAnimation());
         vp.setAdapter(new Adapter());
+
+        btn = (Button) findViewById(R.id.btn);
+        btn.setText("PageAnimation");
+        btn.setOnClickListener(this);
+    }
+
+    private Button btn;
+    private int type = 0;
+
+    private Class list[] = {PageAnimation.class, AccordionTransformer.class,
+            BackgroundToForegroundTransformer.class, CubeInTransformer.class,
+            CubeOutTransformer.class, DefaultTransformer.class,
+            DepthPageTransformer.class, FlipHorizontalTransformer.class,
+            FlipVerticalTransformer.class, ForegroundToBackgroundTransformer.class,
+            RotateDownTransformer.class, RotateUpTransformer.class,
+            ScaleInOutTransformer.class, StackTransformer.class, TabletTransformer.class,
+            ZoomInTransformer.class, ZoomOutTranformer.class, ZoomOutSlideTransformer.class};
+
+    @Override
+    public void onClick(View v) {
+        type = (type + 1) % list.length;
+        Class c = list[type];
+        try {
+            ViewPager.PageTransformer tr = (ViewPager.PageTransformer) c.newInstance();
+            vp.setPageTransformer(false, tr);
+            btn.setText(c.getSimpleName());
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     class Adapter extends PagerAdapter {
