@@ -18,7 +18,7 @@
         <activity android:name=".clip.PagerActivity"/>
         <activity android:name=".http.OkHttpActivity"/>
         <activity android:name=".http.RetrofitActivity"/>
-        <activity android:name=".design.OMDemoActivity"/>
+        <activity android:name=".design.MDActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".design.FABActivity"/>
     </application>
 
 </manifest>

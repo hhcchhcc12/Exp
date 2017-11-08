@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import lk.cn.com.exp.R;
 
-public class OMDemoActivity extends AppCompatActivity {
+/**
+ * 浮动按钮
+ */
+public class FABActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oa_demo);
+        setContentView(R.layout.activity_fab);
     }
 }

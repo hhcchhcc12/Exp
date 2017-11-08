@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f6f6">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/sv"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="app:backgroundTint - 设置FAB的背景颜色。\n\napp:rippleColor - 设置FAB点击时的背景颜色。\n\napp:borderWidth - 该属性尤为重要，如果不设置0dp，那么在4.1的sdk上FAB会显示为正方形，而且在5.0以后的sdk没有阴影效果。所以设置为borderWidth=0dp。\n\napp:elevation - 默认状态下FAB的阴影大小。\n\napp:pressedTranslationZ - 点击时候FAB的阴影大小。\n\napp:fabSize - 设置FAB的大小，该属性有两个值，分别为normal和mini，对应的FAB大小分别为56dp和40dp。\n\n
+src - 设置FAB的图标，Google建议符合Design设计的该图标大小为24dp。\n\napp:layout_anchor - 设置FAB的锚点，即以哪个控件为参照点设置位置，如果是在列表界面中，这个值通常设置为列表控件的id。\n\napp:layout_anchorGravity - 设置FAB相对锚点的位置，值有 bottom、center、right、left、top等。"
+            android:textSize="20sp"/>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:src="@mipmap/ic_launcher"
+        app:backgroundTint="#0058f1"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/sv"
+        app:layout_anchorGravity="bottom|right"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#ff0000"/>
+
+</android.support.design.widget.CoordinatorLayout>
