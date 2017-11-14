@@ -21,6 +21,7 @@ public class MDActivity extends AppCompatActivity {
 
     {
         list.add(new ActivityItem("浮动按钮", FABActivity.class));
+        list.add(new ActivityItem("MD伸缩头部", AppBarActivity.class));
     }
 
     @Override

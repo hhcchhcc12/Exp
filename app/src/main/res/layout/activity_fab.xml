@@ -35,4 +35,5 @@ src - 设置FAB的图标，Google建议符合Design设计的该图标大小为24
         app:pressedTranslationZ="12dp"
         app:rippleColor="#ff0000"/>
 
+
 </android.support.design.widget.CoordinatorLayout>

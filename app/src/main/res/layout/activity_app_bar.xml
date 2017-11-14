@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f6f6">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <!--exitUntilCollapsed - 向上滚动时收缩View，但可以配合layout_collapseMode="pin"，固定Toolbar一直在上面-->
+        <!--【注】：使用CollapsingToolbarLayout时必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上不会显示。-->
+        <!--app:contentScrim  指定CollapsingToolbarLayout完全被滚出到屏幕外时的ColorDrawable-->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:collapsedTitleGravity="center"
+            app:collapsedTitleTextAppearance="@style/CollapsingText"
+            app:contentScrim="#89edd1"
+            app:expandedTitleGravity="left|bottom"
+            app:expandedTitleMargin="10dp"
+            app:expandedTitleTextAppearance="@style/ExtendText"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="伸缩头实例">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"/>
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_collapseMode="pin"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/tb_toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp"-->
+        <!--android:background="#0058f1"-->
+        <!--app:layout_scrollFlags="scroll|enterAlways"-->
+        <!--app:popupTheme="@style/AppTheme"-->
+        <!--app:title="@string/app_name"-->
+        <!--app:titleTextColor="#fff"/>-->
+
+
+        <!--此种情况下(layout_scrollFlags反过来也一样)，1、2会共同enterAlways到1的高度，sv完全下拉到顶时，1、2才会恢复    start-->
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp"-->
+        <!--android:background="#ff0000"-->
+        <!--android:gravity="center"-->
+        <!--android:text="1"-->
+        <!--android:textColor="#fff"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_scrollFlags="scroll|enterAlways"/>-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="90dp"-->
+        <!--android:background="#00ff00"-->
+        <!--android:gravity="center"-->
+        <!--android:text="2"-->
+        <!--android:textColor="#fff"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_scrollFlags="scroll"/>-->
+
+        <!--此种情况下(layout_scrollFlags反过来也一样)，1、2会共同enterAlways到1的高度，sv完全下拉到顶时，1、2才会恢复    end-->
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="scroll - 想滚动就必须设置这个。\n\nenterAlways - 实现quick return效果, 当向下移动时，立即显示View（比如Toolbar)。\n\nexitUntilCollapsed - 向上滚动时收缩View，但可以固定Toolbar一直在上面。\n\nenterAlwaysCollapsed - 实测单独使用在普通view上没卵用。当你的View已经设置minHeight属性又使用此标志时，你的View只能以最小高度进入，只有当滚动视图到达顶部时才扩大到完整高度。"
+            android:textSize="30sp"/>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>

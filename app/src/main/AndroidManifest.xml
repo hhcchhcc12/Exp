@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".design.FABActivity"/>
+        <activity android:name=".design.AppBarActivity"/>
     </application>
 
 </manifest>
