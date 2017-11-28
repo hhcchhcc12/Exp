@@ -33,6 +33,7 @@ import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.HttpException;
@@ -40,7 +41,12 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -198,20 +204,36 @@ public class RetrofitActivity extends AppCompatActivity {
      * 定义有关banner的一系列http接口业务封装类
      */
     public interface BannerService {
-
-        @POST("washMall/app/getBannerList")
-            // 接口路径
-        retrofit2.Call<ResultGetBannerList> getBannerList(
-                @QueryMap Map<String, Object> commonParam, // 公共参数，加到?后面的
-                @Body RequestParam body // 请求参数
-        ); // 接口定义
-
         @POST("washMall/app/getBannerList")
             // 接口路径，rxjava风格
-        Observable<ResultGetBannerList> getBannerList2(
+        Observable<ResultGetBannerList> getBannerList(
                 @QueryMap Map<String, Object> commonParam, // 公共参数，加到?后面的
                 @Body RequestParam body // 请求参数
         ); // 接口定义
+
+        // -------------------------------------------------
+        @POST("washMall/app/{path}")
+        // 接口路径，里面的url是已经剔除了retrofit定义时的baseUrl的
+        retrofit2.Call<ResultGetBannerList> getBannerList(
+                @Path("path") String path,  // 替换路径中的{path}
+                //	@Url String url,             // 可以将上面HTTP请求方法中的url放到参数中
+                @QueryMap Map<String, Object> commonParam,
+                @Body RequestBody body);
+
+        @POST("washMall/app/getBannerList")
+        @Headers({"Accept: application/vnd.github.v3.full+json",
+                "User-Agent: Retrofit-Sample-App"})
+            // 固定值的头
+        retrofit2.Call<ResultGetBannerList> getBannerList(
+                @Header("User-Agent") String lang,          // 单个不固定值的头
+                @HeaderMap Map<String, String> headers      // 多个不固定值的头
+        );
+
+        @POST("washMall/app/getBannerList")
+        retrofit2.Call<ResultGetBannerList> getBannerList(
+                @Query("param") String param  // 相当于url为baseUrl +  "washMall/app/getBannerList?"
+                // + "param=" + param
+        );
     }
 
     // 异步发送post的json请求
@@ -236,13 +258,13 @@ public class RetrofitActivity extends AppCompatActivity {
         commonParam.put("lng", "999.0");
         commonParam.put("lat", "999.0");
         commonParam.put("hig", "0.0");
-        commonParam.put("sign", "fa224d9ec30cc3b20cbae7532e398668");
+        commonParam.put("sign", "fa224d9ec30cc3b20cbae7532e39866");
 
         // 代理模式新建一个代理对象
         BannerService bs = retrofit.create(BannerService.class);
 
         // 结合rxjava使用
-        bs.getBannerList2(commonParam, requestBody)
+        bs.getBannerList(commonParam, requestBody)
                 .subscribeOn(Schedulers.io())  // 在IO线程进行网络请求
                 .observeOn(AndroidSchedulers.mainThread()) // 回到主线程去处理请求结果
                 .subscribe(new Observer<ResultGetBannerList>() {
@@ -260,6 +282,7 @@ public class RetrofitActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        // 400,401等错误也会在此处回调
                         e.printStackTrace();
                         if (e instanceof HttpException) {
                             tv.setText(((HttpException) e).code() + "-->" + ((HttpException) e)
@@ -277,41 +300,47 @@ public class RetrofitActivity extends AppCompatActivity {
 
 
         // retrofit原生风格的http请求对象
-        //        Call call = bs.getBannerList(commonParam, requestBody);
-        //
-        //        call.enqueue(new retrofit2.Callback() {
-        //            @Override
-        //            public void onResponse(Call call, retrofit2.Response response) {
-        //                // 特别注意，400,401等错误也会在此处回调
-        //                final int code = response.code();
-        //                if (response.isSuccessful()) {
-        //                    final ResultGetBannerList responseStr = (ResultGetBannerList)
-        // response.body();
-        //                    Log.d("RESPONSE", "(" + code + ")-->" +
-        //                            responseStr);
-        //                    tv.post(new Runnable() {
-        //                        @Override
-        //                        public void run() {
-        //                            tv.setText(responseStr.bannerList.size() + "");
-        //                        }
-        //                    });
-        //                } else {
-        //                    Log.e("RESPONSE", "(" + code + ")");
-        //                    tv.post(new Runnable() {
-        //                        @Override
-        //                        public void run() {
-        //                            tv.setText(code + "");
-        //                        }
-        //                    });
-        //                }
-        //            }
-        //
-        //            @Override
-        //            public void onFailure(Call call, Throwable t) {
-        //                t.printStackTrace();
-        //                tv.setText(t.getMessage());
-        //            }
-        //        });
+//        Call call = (Call) bs.getBannerList(commonParam, requestBody);
+//
+//        // 同步执行
+////        try {
+////            retrofit2.Response result =  call.execute();
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+//
+//        // 异步执行
+//        call.enqueue(new retrofit2.Callback() {
+//            @Override
+//            public void onResponse(Call call, retrofit2.Response response) {
+//                // 特别注意，400,401等错误也会在此处回调
+//                final int code = response.code();
+//                if (response.isSuccessful()) {
+//                    final ResultGetBannerList responseStr = (ResultGetBannerList) response.body();
+//                    Log.d("RESPONSE", "(" + code + ")-->" + responseStr);
+//                    tv.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tv.setText(responseStr.bannerList.size() + "");
+//                        }
+//                    });
+//                } else {
+//                    Log.e("RESPONSE", "(" + code + ")");
+//                    tv.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tv.setText(code + "");
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//                t.printStackTrace();
+//                tv.setText(t.getMessage());
+//            }
+//        });
     }
 
     private CompositeDisposable disposables = new CompositeDisposable();
